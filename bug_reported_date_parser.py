@@ -16,7 +16,7 @@ try:
     cursor.execute("select path, bug_id from bug_info order by path")
     rows = cursor.fetchall()
     
-    directory = "/Users/evermal/Documents/soen6411/course_project/data/chrome_data_bugs/"
+    directory = "/Users/evermal/Documents/soen6611/course_project/data/chrome_data_bugs/"
     pattern = 'span class="date"\stitle=(.{26})'   
 
     not_found_files = 0 
@@ -27,7 +27,6 @@ try:
             with open(directory+name, 'r') as f:
                 lines = f.readlines();
             for line in lines:
-                # print line
                 match = re.search(pattern, line)
                 if match:
                     new_line = match.group(1) + '\n'
