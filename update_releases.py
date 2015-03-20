@@ -42,9 +42,10 @@ try:
             cursor.execute("select release_date from releases where release_number = '"+str(release_number + 1) +"'")
             next_release_date_result = cursor.fetchone()
             next_release_date = next_release_date_result[0]
-         
+            
+            
             if commit_date is not None:
-                if current_release_date < commit_date.date() < next_release_date:
+                if current_release_date <= commit_date.date() < next_release_date:
                     # print current_release_date , commit_date.date() , next_release_date
                     # print "true commit_date"
                     if bug_report_date is None:
@@ -52,7 +53,7 @@ try:
                     else:    
                         cursor.execute("update bugfix_commits set commit_release ='"+str(release_number)+"' where commit = '"+ str(commit) +"' and bug_id = '"+ str(bug_id) +"' and bug_report_date = '"+ str(bug_report_date) +"' and commit_date ='"+ str(commit_date) +"'")
             if bug_report_date is not None:
-                if current_release_date < bug_report_date.date() < next_release_date: 
+                if current_release_date <= bug_report_date.date() < next_release_date: 
                     # print current_release_date , bug_report_date.date() , next_release_date
                     # print "true commit_date"
                     if commit_date is None:
