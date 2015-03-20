@@ -1,0 +1,22 @@
+# importing the file that contains the data into variable bugfix_distribution
+bugfix_distribution <- read.csv("~/git/chromium_explorer/bugfix_distribution.csv", header=TRUE)
+
+#loop creating new variables for each row in the file, load the values in oercentage, create a bar plot in the home directory
+for(i in 1:41) { 
+    variable_name <- paste("r", i,  sep = "")
+    pdf(paste(variable_name, "pdf", sep = "."))
+    barplot(assign(variable_name, as.matrix(bugfix_distribution[i,3:41]/bugfix_distribution[i,2])))
+    dev.off()
+};
+
+#todos os valores que tem techinical debt 
+#todos os valores que tem bug
+#falta imprimir em arquivo e somar todas as variaveis e calcular a mediana
+for(i in 1:37) {
+    in_memory_var <- paste("r", i,  sep = "")
+    temp_var <- get(in_memory_var)
+    ddebt_variable_name <- paste(in_memory_var, "defect_debt_sum", sep = "_")
+    bugs_variable_name <- paste(in_memory_var, "bug_sum", sep = "_")
+    assign(ddebt_variable_name, sum(temp_var[1,(i+2):39]))
+    assign(bugs_variable_name, sum(temp_var[1,(i): (1+i)]))
+};
