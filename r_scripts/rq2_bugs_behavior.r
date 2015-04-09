@@ -20,16 +20,18 @@ r3_past_fixed <- bugfix_distribution[1,5] + bugfix_distribution[2,5]
 r3_remaining <- r3_reported + r2_remaining - r3_fixed - r3_past_fixed
 r3_remaining
 
-#total number of open bugs in the system 
-#script
+# declare a empty vector to store all the remaining bugs in the system and plo later
+all_remaining_bugs <- c()
+
+#total number of open bugs in the system script 
 for (i in 1:40) {
     past_fixed_temp <- 0L
     
+    # declare the variable names to be assigned in a dynamic way in the loop 
     reported_name <- paste("r", i, "_reported",  sep = "")
     fixed_name <- paste("r", i, "_fixed",  sep = "")
     remaining_name <- paste("r", i, "_remaining",  sep = "")
 
-    
     if(i != 1) {
         for (j in i:1) {
             past_fixed_temp <-  past_fixed_temp + bugfix_distribution[j,2+i]
@@ -44,5 +46,10 @@ for (i in 1:40) {
        assign(fixed_name, bugfix_distribution[i,2+i] + past_fixed_temp)
        assign(remaining_name, get(reported_name) - get(fixed_name) )
        print(paste(i, get(remaining_name), sep = " : " ))
-    }       
+    }
+
+    all_remaining_bugs <- append(all_remaining_bugs, get(remaining_name))       
 }
+
+# Graph of the remainder of bugs in the system.
+plot(all_remaining_bugs, type="o", col="blue")
